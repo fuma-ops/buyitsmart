@@ -9,6 +9,8 @@ UPDATED = '2026-11-02'
 GSC_VERIFY = ''
 # Google Analytics 4 : coller ici l'ID de mesure du flux Web (G-XXXXXXXXXX).
 GA_ID = ''
+# Pinterest : contenu de la balise <meta name="p:domain_verify"> (Revendiquer le site web).
+PIN_VERIFY = ''
 # GA4 + événement « affiliate_click » à chaque clic vers Amazon (nom du produit, page).
 GA_SNIPPET = ('<script async src="https://www.googletagmanager.com/gtag/js?id=__GA__"></script><script>window.dataLayer=window.dataLayer||[];'
               'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","__GA__");'
@@ -20,7 +22,7 @@ FOOT = '''<footer><div class="wrap"><b class="flogo">Buy it <i>smart</i></b><br>
 
 
 def page(title, desc, path, body, image='/assets/img/og.jpg', schema=None, preload_img=None, noindex=False):
-    head_extra = (f'<meta name="google-site-verification" content="{GSC_VERIFY}">' if GSC_VERIFY else '') + (GA_SNIPPET.replace('__GA__', GA_ID) if GA_ID else '')
+    head_extra = (f'<meta name="google-site-verification" content="{GSC_VERIFY}">' if GSC_VERIFY else '') + (GA_SNIPPET.replace('__GA__', GA_ID) if GA_ID else '') + (f'<meta name="p:domain_verify" content="{PIN_VERIFY}">' if PIN_VERIFY else '')
     ld = ''.join(f'<script type="application/ld+json">{json.dumps(s, ensure_ascii=False)}</script>' for s in (schema or []))
     pre = f'<link rel="preload" as="image" href="{preload_img}">' if preload_img else ''
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title><meta name="description" content="{desc}"><meta name="robots" content="{'noindex' if noindex else 'index,follow,max-image-preview:large'}"><link rel="canonical" href="{SITE}{path}"><meta property="og:site_name" content="Buy It Smart"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{SITE}{path}"><meta property="og:image" content="{SITE}{image}"><meta property="og:type" content="{'article' if path.startswith('/guides/') else 'website'}"><meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/favicon.png"><link rel="apple-touch-icon" href="/assets/img/logo-512.png"><meta name="theme-color" content="#F7F3EE">{head_extra}<link rel="preload" href="/assets/fonts/PlayfairDisplay-900-normal.woff2" as="font" type="font/woff2" crossorigin>{pre}<link rel="stylesheet" href="/assets/style.css?v=6">{ld}</head><body>{NAV}<main class="wrap">{body}</main>{FOOT}</body></html>'''
@@ -176,6 +178,7 @@ write('terms/index.html', page('Terms of service – Buy It Smart', 'Terms of se
 cb = '''<div class="prose"><div class="kick">Authorization</div><h1>Almost done ✓</h1><p id="msg">Copy the code below and send it back to finish connecting your account.</p><p><textarea id="code" readonly style="width:100%;min-height:120px;font:14px monospace;padding:12px;border-radius:12px;border:1px solid var(--line)"></textarea></p><p><button id="cp" class="pill" style="border:0;cursor:pointer">Copy the code</button></p></div>
 <script>const q=new URLSearchParams(location.search);const c=q.get('code');const e=q.get('error');document.getElementById('code').value=c?('code='+c+'\\nstate='+(q.get('state')||'')):('error='+(e||'none')+' '+(q.get('error_description')||''));if(!c)document.getElementById('msg').textContent='No code received: the authorization was cancelled or failed.';document.getElementById('cp').onclick=()=>{navigator.clipboard.writeText(document.getElementById('code').value);document.getElementById('cp').textContent='Copied ✓'}</script>'''
 write('tiktok/callback/index.html', page('Authorization – Buy It Smart', 'Authorization callback.', '/tiktok/callback/', cb, noindex=True))
+write('oauth/callback/index.html', page('Authorization – Buy It Smart', 'Authorization callback.', '/oauth/callback/', cb, noindex=True))
 
 # ---------- Tous les guides + 404 ----------
 GUIDES = [('/guides/air-fryer/', '/assets/img/air-fryer.jpg', 'Kitchen', 'Best healthy air fryer 2026: size, coating, cleaning', 'Glass, ceramic or nonstick, basket or oven… and 3 picks for every budget.', '6 min read'),
