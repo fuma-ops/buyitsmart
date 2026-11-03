@@ -10,7 +10,7 @@ GSC_VERIFY = ''
 # Google Analytics 4 : coller ici l'ID de mesure du flux Web (G-XXXXXXXXXX).
 GA_ID = ''
 # Pinterest : contenu de la balise <meta name="p:domain_verify"> (Revendiquer le site web).
-PIN_VERIFY = ''
+PIN_VERIFY = 'ac6b99e3c4b6fd89334980767a1009cc'
 # GA4 + événement « affiliate_click » à chaque clic vers Amazon (nom du produit, page).
 GA_SNIPPET = ('<script async src="https://www.googletagmanager.com/gtag/js?id=__GA__"></script><script>window.dataLayer=window.dataLayer||[];'
               'function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","__GA__");'
