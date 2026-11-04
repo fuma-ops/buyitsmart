@@ -21,6 +21,7 @@ textarea,select{width:100%;font:inherit;padding:12px;border:1.5px solid var(--li
 .disc{margin-top:12px;padding:14px;border-radius:12px;background:var(--bg)}.disc label{display:flex;gap:10px;margin:8px 0;align-items:flex-start}.disc small{color:var(--mute)}
 .hint{font-size:13px;color:#b45309;margin-top:8px}.lab{font-size:13px;color:var(--mute);margin-top:6px}
 .legal{font-size:13px;color:var(--mute);margin-top:18px}.legal a{color:var(--ink)}
+button.draft{margin-top:10px;width:100%;padding:13px;font-size:15px;font-weight:700;border:1.5px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);cursor:pointer}button.draft:disabled{opacity:.4;cursor:not-allowed}
 button.post{margin-top:16px;width:100%;padding:15px;font-size:16px;font-weight:700;border:0;border-radius:12px;background:var(--acc);color:#fff;cursor:pointer}button.post:disabled{background:#f3b5c2;cursor:not-allowed}
 .status{margin-top:14px;padding:12px;border-radius:12px;background:#eefaf3;color:var(--ok);font-weight:600;display:none}.status.err{background:#fdecec;color:#b42318}
 .who{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border-radius:12px;font-weight:600}.who img{width:32px;height:32px;border-radius:50%}
@@ -50,6 +51,7 @@ button.post{margin-top:16px;width:100%;padding:15px;font-size:16px;font-weight:7
   </div>
   <div class="legal" id="legal"></div>
   <button class="post" id="post" disabled>Post to TikTok</button>
+  <button class="draft" id="draft" disabled>Send to my TikTok drafts instead</button><div class="lab">Drafts open in your TikTok inbox: finish editing and post from the TikTok app.</div>
   <div class="status" id="status"></div>
 </section>
 </main>
@@ -85,6 +87,7 @@ function check(){
   $('legal').innerHTML=bc?`By posting, you agree to TikTok's ${BCP} and ${MUC}.`:`By posting, you agree to TikTok's ${MUC}.`;
   const max=acc?acc.max_video_post_duration_sec:0;$('dur').textContent=video&&dur?`Duration ${dur.toFixed(1)} s${max?` · maximum allowed for this account: ${max} s`:''}`:'';
   $('post').disabled=!(acc&&video&&$('priv').value&&(!on||yb||bc)&&(!max||dur<=max));
+  $('draft').disabled=!(acc&&video&&(!max||dur<=max));
 }
 $('post').onclick=async()=>{
   $('post').disabled=true;const s=$('status');s.className='status';s.style.display='block';s.textContent='Uploading your video to TikTok…';
@@ -96,6 +99,15 @@ $('post').onclick=async()=>{
     if(st.status==='PUBLISH_COMPLETE'){s.textContent='✅ Posted to TikTok.';return}
     if(st.status==='FAILED'){s.className='status err';s.textContent='Post failed: '+(st.fail_reason||'unknown');return}
     s.textContent='Processing on TikTok… ('+(st.status||'waiting')+')';setTimeout(poll,3000)};poll();
+};
+$('draft').onclick=async()=>{
+  $('draft').disabled=true;const s=$('status');s.className='status';s.style.display='block';s.textContent='Sending your video to your TikTok inbox…';
+  const r=await (await fetch('/api/draft',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({acc:acc.acc,file:video})})).json();
+  if(r.error){s.className='status err';s.textContent='TikTok refused the draft: '+r.error;$('draft').disabled=false;return}
+  const poll=async()=>{const st=await (await fetch(`/api/status?acc=${acc.acc}&id=${encodeURIComponent(r.publish_id)}`)).json();
+    if(st.status==='SEND_TO_USER_INBOX'||st.status==='PUBLISH_COMPLETE'){s.textContent='✅ Sent to your TikTok inbox. Open the TikTok app to finish and post it.';return}
+    if(st.status==='FAILED'){s.className='status err';s.textContent='Upload failed: '+(st.fail_reason||'unknown');return}
+    s.textContent='Uploading to TikTok… ('+(st.status||'waiting')+')';setTimeout(poll,3000)};poll();
 };
 init();
 </script></body></html>
