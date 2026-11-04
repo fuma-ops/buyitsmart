@@ -1,0 +1,101 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fuma Ops Publisher</title><meta name="robots" content="noindex"><style>
+:root{--ink:#16141a;--mute:#6b6772;--line:#e7e3ea;--bg:#f7f6f9;--acc:#fe2c55;--ok:#14a05b}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+header{display:flex;align-items:center;gap:14px;padding:18px 28px;background:#fff;border-bottom:1px solid var(--line)}
+header img{width:40px;height:40px;border-radius:10px}header b{font-size:20px}header span{color:var(--mute);font-size:14px;margin-left:auto}
+main{max-width:1060px;margin:26px auto;padding:0 20px;display:grid;grid-template-columns:360px 1fr;gap:24px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px}
+h2{font-size:15px;text-transform:uppercase;letter-spacing:.6px;color:var(--mute);margin:0 0 14px}
+.acc{display:flex;align-items:center;gap:12px;padding:12px;border:2px solid var(--line);border-radius:14px;margin-bottom:10px;cursor:pointer}
+.acc.sel{border-color:var(--acc);background:#fff5f7}.acc img{width:44px;height:44px;border-radius:50%}.acc small{display:block;color:var(--mute)}
+.acc.err{opacity:.6;cursor:not-allowed}
+.btn2{display:block;text-align:center;padding:11px;border:1.5px dashed var(--line);border-radius:12px;color:var(--ink);text-decoration:none;font-weight:600;margin-top:6px}
+.vid{padding:10px 12px;border:2px solid var(--line);border-radius:12px;margin-bottom:8px;cursor:pointer;font-size:14px}.vid.sel{border-color:var(--acc)}
+video{width:100%;max-height:420px;background:#000;border-radius:14px}
+label.f{display:block;font-weight:600;margin:18px 0 8px}
+textarea,select{width:100%;font:inherit;padding:12px;border:1.5px solid var(--line);border-radius:12px}textarea{min-height:110px;resize:vertical}
+.cnt{text-align:right;font-size:12px;color:var(--mute)}
+.chk{display:flex;gap:22px;flex-wrap:wrap}.chk label{display:flex;gap:8px;align-items:center}.chk label.dis{color:#aaa}
+.tg{display:flex;align-items:center;justify-content:space-between;margin-top:18px}.sw{width:46px;height:26px;border-radius:13px;background:#ccc;position:relative;cursor:pointer;border:0}.sw.on{background:var(--acc)}.sw i{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}.sw.on i{left:23px}
+.disc{margin-top:12px;padding:14px;border-radius:12px;background:var(--bg)}.disc label{display:flex;gap:10px;margin:8px 0;align-items:flex-start}.disc small{color:var(--mute)}
+.hint{font-size:13px;color:#b45309;margin-top:8px}.lab{font-size:13px;color:var(--mute);margin-top:6px}
+.legal{font-size:13px;color:var(--mute);margin-top:18px}.legal a{color:var(--ink)}
+button.post{margin-top:16px;width:100%;padding:15px;font-size:16px;font-weight:700;border:0;border-radius:12px;background:var(--acc);color:#fff;cursor:pointer}button.post:disabled{background:#f3b5c2;cursor:not-allowed}
+.status{margin-top:14px;padding:12px;border-radius:12px;background:#eefaf3;color:var(--ok);font-weight:600;display:none}.status.err{background:#fdecec;color:#b42318}
+.who{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border-radius:12px;font-weight:600}.who img{width:32px;height:32px;border-radius:50%}
+</style></head><body>
+<header><img src="/publisher/icon.png" alt=""><b>Fuma Ops Publisher</b><span>Post your own videos to TikTok</span></header>
+<main>
+<section>
+  <div class="card"><h2>1 · TikTok account</h2><div id="accs">Loading…</div><a class="btn2" href="/connect" id="connect">+ Connect a TikTok account</a></div>
+  <div class="card" style="margin-top:20px"><h2>2 · Video</h2><div id="vids"></div></div>
+</section>
+<section class="card">
+  <h2>3 · Post details</h2>
+  <div class="who" id="who">Select an account</div>
+  <video id="pv" controls playsinline></video>
+  <div class="lab" id="dur"></div>
+  <label class="f" for="title">Caption</label>
+  <textarea id="title" maxlength="2200" placeholder="Write a caption, #hashtags…"></textarea><div class="cnt"><span id="n">0</span> / 2200</div>
+  <label class="f" for="priv">Who can view this video</label>
+  <select id="priv"><option value="" selected disabled>Select…</option></select>
+  <label class="f">Allow users to</label>
+  <div class="chk"><label id="lc"><input type="checkbox" id="cm"> Comment</label><label id="ld"><input type="checkbox" id="du"> Duet</label><label id="ls"><input type="checkbox" id="st"> Stitch</label></div>
+  <div class="tg"><div><b>Disclose video content</b><div class="lab">Turn on to disclose that this video promotes goods or services in exchange for something of value. Your video could promote yourself, a third party, or both.</div></div><button class="sw" id="disc" aria-label="Disclose video content"><i></i></button></div>
+  <div class="disc" id="discbox" style="display:none">
+    <label><input type="checkbox" id="yb"><span><b>Your brand</b><br><small>You are promoting yourself or your own business. This video will be classified as Brand Organic.</small></span></label>
+    <label><input type="checkbox" id="bc"><span><b>Branded content</b><br><small>You are promoting another brand or a third party. This video will be classified as Branded Content.</small></span></label>
+    <div class="lab" id="label"></div><div class="hint" id="dhint"></div>
+  </div>
+  <div class="legal" id="legal"></div>
+  <button class="post" id="post" disabled>Post to TikTok</button>
+  <div class="status" id="status"></div>
+</section>
+</main>
+<script>
+const $=(i)=>document.getElementById(i);const PL={PUBLIC_TO_EVERYONE:'Everyone',MUTUAL_FOLLOW_FRIENDS:'Friends',FOLLOWER_OF_CREATOR:'Followers',SELF_ONLY:'Only me'};
+let accs=[],acc=null,video=null,dur=0;
+const MUC='<a href="https://www.tiktok.com/legal/page/global/music-usage-confirmation/en" target="_blank">Music Usage Confirmation</a>';
+const BCP='<a href="https://www.tiktok.com/legal/page/global/bc-policy/en" target="_blank">Branded Content Policy</a>';
+async function init(){
+  accs=await (await fetch('/api/accounts')).json();
+  $('accs').innerHTML=accs.map((a,i)=>a.error?`<div class="acc err"><div><b>${a.acc}</b><small>Cannot post right now: ${a.error}</small></div></div>`:
+   `<div class="acc" data-i="${i}"><img src="${a.creator_avatar_url}" alt=""><div><b>${a.creator_nickname}</b><small>@${a.creator_username}</small></div></div>`).join('')||'No account connected yet.';
+  document.querySelectorAll('.acc[data-i]').forEach(el=>el.onclick=()=>pickAcc(+el.dataset.i,el));
+  const vids=await (await fetch('/api/videos')).json();
+  $('vids').innerHTML=vids.map(v=>`<div class="vid" data-f="${v.file}">${v.file}</div>`).join('');
+  document.querySelectorAll('.vid').forEach(el=>el.onclick=()=>{document.querySelectorAll('.vid').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');video=el.dataset.f;$('pv').src='/video?f='+encodeURIComponent(video);});
+}
+$('pv').onloadedmetadata=()=>{dur=$('pv').duration;check()};
+function pickAcc(i,el){acc=accs[i];document.querySelectorAll('.acc').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');
+  $('who').innerHTML=`<img src="${acc.creator_avatar_url}" alt="">Posting as ${acc.creator_nickname} (@${acc.creator_username})`;
+  $('priv').innerHTML='<option value="" selected disabled>Select…</option>'+acc.privacy_level_options.map(o=>`<option value="${o}">${PL[o]||o}</option>`).join('');
+  [['cm','lc','comment_disabled'],['du','ld','duet_disabled'],['st','ls','stitch_disabled']].forEach(([c,l,k])=>{$(c).checked=false;$(c).disabled=!!acc[k];$(l).classList.toggle('dis',!!acc[k]);$(l).title=acc[k]?'Turned off in your TikTok settings':''});
+  check();}
+$('title').oninput=()=>{$('n').textContent=$('title').value.length;check()};
+$('priv').onchange=check;['yb','bc'].forEach(i=>$(i).onchange=check);
+$('disc').onclick=()=>{$('disc').classList.toggle('on');$('discbox').style.display=$('disc').classList.contains('on')?'block':'none';if(!$('disc').classList.contains('on')){$('yb').checked=$('bc').checked=false}check()};
+function check(){
+  const on=$('disc').classList.contains('on'),yb=$('yb').checked,bc=$('bc').checked;
+  const only=[...$('priv').options].find(o=>o.value==='SELF_ONLY');
+  if(only){only.disabled=bc;only.textContent=bc?'Only me (branded content visibility cannot be set to private)':'Only me';if(bc&&$('priv').value==='SELF_ONLY')$('priv').value=''}
+  $('label').textContent=on&&(yb||bc)?(bc?'Your video will be labeled as "Paid partnership".':'Your video will be labeled as "Promotional content".'):'';
+  $('dhint').textContent=on&&!yb&&!bc?'You need to indicate if your content promotes yourself, a third party, or both.':'';
+  $('legal').innerHTML=bc?`By posting, you agree to TikTok's ${BCP} and ${MUC}.`:`By posting, you agree to TikTok's ${MUC}.`;
+  const max=acc?acc.max_video_post_duration_sec:0;$('dur').textContent=video&&dur?`Duration ${dur.toFixed(1)} s${max?` · maximum allowed for this account: ${max} s`:''}`:'';
+  $('post').disabled=!(acc&&video&&$('priv').value&&(!on||yb||bc)&&(!max||dur<=max));
+}
+$('post').onclick=async()=>{
+  $('post').disabled=true;const s=$('status');s.className='status';s.style.display='block';s.textContent='Uploading your video to TikTok…';
+  const body={acc:acc.acc,file:video,title:$('title').value,privacy_level:$('priv').value,allow_comment:$('cm').checked,allow_duet:$('du').checked,allow_stitch:$('st').checked,brand_organic_toggle:$('yb').checked,brand_content_toggle:$('bc').checked};
+  const r=await (await fetch('/api/post',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})).json();
+  if(r.error){s.className='status err';s.textContent='TikTok refused the post: '+r.error;$('post').disabled=false;return}
+  s.textContent='Uploaded. TikTok is processing your video — it may take a few minutes to appear on your profile.';
+  const poll=async()=>{const st=await (await fetch(`/api/status?acc=${acc.acc}&id=${encodeURIComponent(r.publish_id)}`)).json();
+    if(st.status==='PUBLISH_COMPLETE'){s.textContent='✅ Posted to TikTok.';return}
+    if(st.status==='FAILED'){s.className='status err';s.textContent='Post failed: '+(st.fail_reason||'unknown');return}
+    s.textContent='Processing on TikTok… ('+(st.status||'waiting')+')';setTimeout(poll,3000)};poll();
+};
+init();
+</script></body></html>
