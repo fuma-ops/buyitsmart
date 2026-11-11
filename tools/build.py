@@ -250,6 +250,7 @@ nf = '''<div class="prose"><div class="kick">404</div><h1>This page doesn’t ex
 write('404.html', page('Page not found – Buy It Smart', 'This page does not exist.', '/404', nf, noindex=True))
 
 exec(open('tools/usecases.py').read())
+exec(open('tools/products.py').read())
 
 pages = [('/', '1.0'), ('/guides/', '0.6'), ('/guides/black-friday-kitchen-home-deals/', '0.9'), ('/guides/robot-vacuum/', '0.9'), ('/guides/air-fryer/', '0.9'), ('/guides/coffee-maker/', '0.9'), ('/guides/bed-sheets/', '0.9'), ('/about/', '0.3'), ('/privacy/', '0.1')]
 write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'
