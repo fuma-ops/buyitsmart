@@ -218,7 +218,9 @@ about = '''<div class="prose"><div class="kick">About</div><h1>How we choose</h1
 write('about/index.html', page('About Buy It Smart & how we choose products', 'How Buy It Smart chooses products: criteria first, expert tests and buyer reviews, one pick per budget.', '/about/', about, schema=[{'@context': 'https://schema.org', **ORG}]))
 
 priv = '''<div class="prose"><div class="kick">Legal</div><h1>Privacy policy</h1><p>Last updated: November 2026.</p><h2>What we collect</h2><p>This site has no account, no form and no newsletter. We do not ask for any personal data.</p><h2>Amazon links</h2><p>Buy It Smart is a participant in the Amazon Services LLC Associates Program, an affiliate advertising program designed to provide a means for sites to earn advertising fees by advertising and linking to Amazon.com. When you click a link to Amazon, Amazon may use cookies to attribute a purchase. Amazon's own privacy notice applies on its website.</p>'''+("<h2>Audience measurement</h2><p>We use Google Analytics to count visits and see which guides and links are useful (pages viewed, clicks to Amazon, device and country). Google may set cookies for this. We do not use it to identify you. You can block it with your browser settings or the <a href=\"https://tools.google.com/dlpage/gaoptout\" target=\"_blank\" rel=\"noopener\"><u>Google Analytics opt-out add-on</u></a>.</p>" if GA_ID else '')+'''<h2>Hosting</h2><p>The site is hosted by Vercel, which may keep technical logs (such as IP addresses) for security and performance.</p><h2>Contact</h2><p>Questions: Instagram <a href="https://www.instagram.com/buyitsmartguides/" target="_blank" rel="noopener"><u>@buyitsmartguides</u></a>.</p></div>'''
-write('privacy/index.html', page('Privacy policy – Buy It Smart', 'Privacy policy of Buy It Smart.', '/privacy/', priv))
+# La page de confidentialité contient une section « Fuma Ops Publisher » ajoutée à la main : ne pas l'écraser.
+if not (os.path.exists('privacy/index.html') and 'Publisher' in open('privacy/index.html').read()):
+    write('privacy/index.html', page('Privacy policy – Buy It Smart', 'Privacy policy of Buy It Smart.', '/privacy/', priv))
 
 
 # ---------- Conditions d'utilisation + retour d'autorisation TikTok ----------
@@ -241,7 +243,9 @@ write('guides/index.html', page('All buying guides – Buy It Smart', 'All Buy I
 nf = '''<div class="prose"><div class="kick">404</div><h1>This page doesn’t exist</h1><p>The link may be old or mistyped. Here is where to go next:</p><ul><li><a href="/guides/air-fryer/"><u>Best healthy air fryer guide</u></a></li><li><a href="/guides/robot-vacuum/"><u>Best robot vacuum guide</u></a></li><li><a href="/guides/black-friday-kitchen-home-deals/"><u>Black Friday 2026 guide</u></a></li><li><a href="/guides/"><u>All buying guides</u></a></li></ul></div>'''
 write('404.html', page('Page not found – Buy It Smart', 'This page does not exist.', '/404', nf, noindex=True))
 
+exec(open('tools/usecases.py').read())
+
 pages = [('/', '1.0'), ('/guides/', '0.6'), ('/guides/black-friday-kitchen-home-deals/', '0.9'), ('/guides/robot-vacuum/', '0.9'), ('/guides/air-fryer/', '0.9'), ('/about/', '0.3'), ('/privacy/', '0.1')]
 write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'
-      + ''.join(f'<url><loc>{SITE}{p}</loc><lastmod>{UPDATED}</lastmod><priority>{pr}</priority>' + (f'<image:image><image:loc>{SITE}/assets/img/robot-vacuum.jpg</image:loc></image:image>' if 'robot' in p else f'<image:image><image:loc>{SITE}/assets/img/air-fryer.jpg</image:loc></image:image>' if ('air-fryer' in p or 'black-friday' in p) else '') + '</url>' for p, pr in pages) + '</urlset>\n')
+      + ''.join(f'<url><loc>{SITE}{p}</loc><lastmod>{UPDATED}</lastmod><priority>{pr}</priority>' + (f'<image:image><image:loc>{SITE}/assets/img/robot-vacuum.jpg</image:loc></image:image>' if 'robot' in p else f'<image:image><image:loc>{SITE}/assets/img/air-fryer.jpg</image:loc></image:image>' if ('air-fryer' in p or 'black-friday' in p) else '') + '</url>' for p, pr in pages + EXTRA_PAGES) + '</urlset>\n')
 print('ok')
