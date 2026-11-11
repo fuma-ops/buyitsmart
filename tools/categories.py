@@ -25,7 +25,7 @@ CATS = [
         f'https://www.amazon.com/dp/B07H9G93WK?tag={TAG}', '/assets/img/cf-drip-coffee-maker.jpg', 'Drip coffee maker with a thermal carafe (illustration)', ' top'),
        ('PREMIUM', 'b3', 'Breville Bambino Plus Espresso Machine', 'Latte and cappuccino lovers who want café drinks at home',
         ['ThermoJet heating: ready to brew in about 3 seconds (brand claim)', 'Automatic steam wand: 3 milk temperatures and 3 textures', '54 mm portafilter with single and dual-wall filters', 'Best with freshly ground beans: budget for a burr grinder'],
-        _amz_s('Breville+Bambino+Plus+BES500'), '/assets/img/cf-espresso-machine.jpg', 'Compact espresso machine with a steam wand (illustration)', ''),
+        'https://link.amazon/B005mn5Mz', '/assets/img/cf-espresso-machine.jpg', 'Compact espresso machine with a steam wand (illustration)', ''),
       ],
       steps=[
        ('Start with how you drink coffee', 'A big pot for the family? Drip. One quick cup before work? A pod machine. Lattes and cappuccinos? Espresso with a steam wand. A slow weekend ritual on a small budget? French press or pour-over. Choosing the brew style first saves you from paying for features you will never use.', 'Count how many cups your home drinks on a weekday: 1 to 2 points to single-serve, 4 or more points to a drip machine with a carafe.', '/assets/img/cf-french-press-pour-over.jpg', 'French press and pour-over coffee brewing on a counter'),
@@ -55,13 +55,13 @@ CATS = [
       picks=[
        ('BEST BUDGET', 'b1', 'Mellanni Brushed Microfiber Sheet Set', 'Guest rooms, kids’ beds and tight budgets',
         ['Double-brushed microfiber (polyester): soft and wrinkle-resistant', 'Deep pockets for mattresses up to about 16 inches (check your size)', 'All-around elastic on the fitted sheet', 'Can sleep warmer than cotton or linen'],
-        _amz_s('Mellanni+brushed+microfiber+sheet+set'), '/assets/img/bd-sheet-set.jpg', 'Folded bed sheet set with pillowcases (illustration)', ''),
+        'https://link.amazon/B00KTzdij', '/assets/img/bd-sheet-set.jpg', 'Folded bed sheet set with pillowcases (illustration)', ''),
        ('BEST OVERALL', 'b2', 'California Design Den 400 Thread Count Cotton Sateen Sheets', 'Most sleepers who want soft, smooth cotton',
         ['100% long-staple cotton, sateen weave: smooth with a soft sheen', 'OEKO-TEX Standard 100 certified (per the brand)', 'Deep pockets up to 16 inches on most sizes (15 inches on Twin and Twin XL)', 'Sateen feels warmer than percale: hot sleepers, read step 2'],
-        _amz_s('California+Design+Den+400+thread+count+cotton+sateen+sheets'), '/assets/img/bd-white-cotton-sheets.jpg', 'Smooth white cotton sateen sheets on a bed (illustration)', ' top'),
+        'https://link.amazon/B04zJbXzw', '/assets/img/bd-white-cotton-sheets.jpg', 'Smooth white cotton sateen sheets on a bed (illustration)', ' top'),
        ('PREMIUM', 'b3', 'Simple&amp;Opulence 100% Linen Sheet Set', 'Hot sleepers and lovers of the relaxed, natural look',
         ['100% stone-washed French flax linen', 'OEKO-TEX Standard 100 certified (per the brand)', 'Fitted sheet with a 14-inch deep pocket: measure your mattress first', 'Linen wrinkles by nature: that relaxed look is part of it'],
-        _amz_s('Simple+Opulence+100%25+linen+sheet+set'), '/assets/img/bd-linen-sheets.jpg', 'Natural linen sheets with a relaxed texture (illustration)', ''),
+        'https://link.amazon/B04NsUeHM', '/assets/img/bd-linen-sheets.jpg', 'Natural linen sheets with a relaxed texture (illustration)', ''),
       ],
       steps=[
        ('Measure your mattress depth first', 'The most common sheet problem is a fitted sheet that pops off the corners. Measure your mattress from the bottom seam to the top, including any topper, then choose a pocket depth at least 1 to 2 inches deeper. Standard pockets fit thinner mattresses; “deep pocket” sets fit thicker ones.', 'Write your mattress depth on your phone: you will need it every time you buy sheets or a mattress protector.', '/assets/img/bd-measure-mattress-depth.jpg', 'Measuring the depth of a mattress with a tape measure'),
