@@ -19,7 +19,7 @@ CATS = [
       picks=[
        ('BEST BUDGET', 'b1', 'Keurig K-Mini Single-Serve Coffee Maker', 'One person, small kitchens, coffee in one minute of effort',
         ['Brews one cup from 6 to 12 oz with K-Cup pods', 'Less than 5 inches wide: fits almost any counter', 'No carafe, no filter, nothing to measure', 'Pods cost more per cup than ground coffee: count it'],
-        _amz_s('Keurig+K-Mini+single+serve+coffee+maker'), '/assets/img/cf-pod-coffee-maker.jpg', 'Compact single-serve pod coffee maker (illustration)', ''),
+        'https://link.amazon/B0hgdV6Ne', '/assets/img/cf-pod-coffee-maker.jpg', 'Compact single-serve pod coffee maker (illustration)', ''),
        ('BEST OVERALL', 'b2', 'OXO Brew 8-Cup Coffee Maker', 'Couples and families who drink real drip coffee every day',
         ['SCA Certified Home Brewer: tested to brew at the right temperature and time', 'Thermal stainless-steel carafe keeps coffee hot without a hot plate', '40 oz water tank, up to 8 cups', 'Can also brew a single cup into your mug'],
         f'https://www.amazon.com/dp/B07H9G93WK?tag={TAG}', '/assets/img/cf-drip-coffee-maker.jpg', 'Drip coffee maker with a thermal carafe (illustration)', ' top'),
